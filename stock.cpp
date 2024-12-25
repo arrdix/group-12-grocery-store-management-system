@@ -1,25 +1,16 @@
 #include <iostream>
 #include <vector>
+#include "global-variables.hpp"
 using namespace std;
 
 void stockManagement();
 void productList();
 
-struct Product {
-    string code;
-    string name;
-    double price;
-    int qty;
-    int minQty;
-};
-
-vector<Product> products;
-
 void productList() {
     cout << endl;
-    cout << endl << "-------------------";
-    cout << endl << "       Login       ";
-    cout << endl << "-------------------";
+    cout << endl << "--------------------------";
+    cout << endl << "       Product List       ";
+    cout << endl << "--------------------------";
     cout << endl;
     cout << endl;
 
@@ -54,10 +45,6 @@ void productList() {
 }
 
 void stockManagement() {
-    products.push_back({ "P001", "Oreo", 10000.0, 50, 5 });
-    products.push_back({ "P002", "Bengbeng", 12000.0, 50, 5 });
-    products.push_back({ "P003", "Indomie", 9000.0, 50, 5 });
-    
     int choice = -1;
 
     while (choice != 0) {

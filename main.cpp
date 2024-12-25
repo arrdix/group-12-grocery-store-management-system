@@ -2,9 +2,20 @@
 #include "stock.cpp"
 #include "credit.cpp"
 #include "transaction.cpp"
+#include "global-variables.hpp"
 using namespace std;
 
+vector<Product> products;
+
+void addInitialProduct() {
+    products.push_back({ "P001", "Oreo", 10000.0, 50, 5 });
+    products.push_back({ "P002", "Bengbeng", 12000.0, 50, 5 });
+    products.push_back({ "P003", "Indomie", 9000.0, 50, 5 });
+}
+
 int main() {
+    addInitialProduct();
+
     int role = -1;
 
     while (role != 1 && role != 2) {

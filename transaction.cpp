@@ -1,5 +1,7 @@
 #include <iostream>
+#include "global-variables.hpp"
+using namespace std;
 
 void transactionManagement() {
-    std::cout << "Transaction Management" << std::endl;
+    cout << "Transaction Management";
 }
