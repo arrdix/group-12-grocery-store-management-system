@@ -1,0 +1,53 @@
+# Compiled Object files
+*.o
+*.obj
+*.dSYM
+
+# Compiled binary files
+*.exe
+*.out
+*.app
+
+# Build directories
+/build/
+bin/
+obj/
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+Makefile
+Makefile.in
+cmake_install.cmake
+
+# Visual Studio files
+.vscode/
+*.sln
+*.user
+*.suo
+*.vcxproj
+*.vcxproj.user
+
+# Code::Blocks files
+*.depend
+*.layout
+*.workspace
+
+# Eclipse files
+.settings/
+*.project
+*.cproject
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Backup files
+*~
+*.bak
+*.swp
+
+# IDE specific files
+.idea/
+*.iml
