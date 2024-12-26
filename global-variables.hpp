@@ -29,6 +29,7 @@ struct Transaction {
 struct Credit {
     string id;
     string name;
+    string dueDate;
     double total;
 };
 

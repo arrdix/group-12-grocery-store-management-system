@@ -36,9 +36,9 @@ void addInitialHistory() {
 }
 
 void addInitialCredit() {
-    credits.push_back({ "C001", "Ardi", 12000 });
-    credits.push_back({ "C002", "Emerald", 9000 });
-    credits.push_back({ "C003", "Dira", 17000 });
+    credits.push_back({ "C001", "Ardi", "12 Jan 2025", 12000 });
+    credits.push_back({ "C002", "Emerald", "29 Jan 2025", 9000 });
+    credits.push_back({ "C003", "Dira", "1 Feb 2025", 17000 });
 }
 
 int main() {

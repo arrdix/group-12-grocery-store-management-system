@@ -7,6 +7,7 @@ void adminMenu();
 void unpaidCredit();
 void payCredit();
 void creditManagement();
+void creditDueDate();
 
 void creditManagement() {
     int choice = -1;
@@ -38,7 +39,9 @@ void creditManagement() {
 
     if (choice == 1) {
         unpaidCredit();     
-    } else if (choice == 3) {
+    } else if (choice == 2) {
+        creditDueDate();
+    } else {
         payCredit();
     }
 }
@@ -55,10 +58,42 @@ void unpaidCredit() {
         cout << endl;
 
         for (const Credit& credit : credits) {
-            // Only render credits with a total != 0 which means the credit is unpaid
             if (credit.total != 0) {
                 cout << endl << "Name: " << credit.name;
                 cout << endl << "Unpaid Credit: " << credit.total;
+                cout << endl;
+            }
+        }
+
+        cout << endl << "9. Back";
+        cout << endl;
+
+        cout << endl << "Select menu (9): ";
+        cin >> choice;
+
+        if (choice == 9) {
+            creditManagement();
+        } else {
+            cout << "Input isn't valid. Please provide a valid input." << endl;
+        }
+    }
+}
+
+void creditDueDate() {
+    int choice = -1;
+
+    while (choice != 0) {
+        system("clear");
+
+        cout << endl << "-----------------------------";
+        cout << endl << "       Credit Due Date       ";
+        cout << endl << "------------------------==---";
+        cout << endl;
+
+        for (const Credit& credit : credits) {
+            if (credit.total != 0) {
+                cout << endl << "Name: " << credit.name;
+                cout << endl << "Credit due date: " << credit.dueDate;
                 cout << endl;
             }
         }
