@@ -8,6 +8,7 @@ using namespace std;
 
 vector<Product> products;
 vector<Transaction> transactions;
+vector<Credit> credits;
 
 void addInitialProduct() {
     products.push_back({ "P001", "Oreo", 10000.0, 50, 5 });
@@ -15,8 +16,15 @@ void addInitialProduct() {
     products.push_back({ "P003", "Indomie", 9000.0, 50, 5 });
 }
 
+void addInitialCredit() {
+    credits.push_back({ "C001", "Ardi", 12000 });
+    credits.push_back({ "C002", "Emerald", 9000 });
+    credits.push_back({ "C003", "Dira", 17000 });
+}
+
 int main() {
     addInitialProduct();
+    addInitialCredit();
 
     int role = -1;
 
@@ -69,6 +77,7 @@ void mainMenu() {
         cout << endl << "2. Credit Management";
         cout << endl << "3. Transaction Management";
         cout << endl;
+        cout << endl << "9. Logout";
         cout << endl << "0. Exit";
         cout << endl;
 
@@ -77,6 +86,8 @@ void mainMenu() {
 
         if (choice >= 0 && choice <= 3) {
             break;
+        } else if (choice == 9) {
+            main();
         } else if (choice == 0) {
             return;
         } else {

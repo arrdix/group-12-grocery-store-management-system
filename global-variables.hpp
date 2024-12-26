@@ -20,7 +20,14 @@ struct Transaction {
     double total;
 };
 
+struct Credit {
+    string id;
+    string name;
+    double total;
+};
+
 extern vector<Product> products;
 extern vector<Transaction> transactions;
+extern vector<Credit> credits;
 
 #endif
