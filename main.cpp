@@ -53,8 +53,9 @@ int main() {
 
 void login() {
     int role = -1;
+    bool running = true;
 
-    while (role != 1 && role != 2) {
+    while (running) {
         system("clear");
 
         cout << endl << "-------------------";
@@ -73,24 +74,29 @@ void login() {
 
         cout << endl;
 
-        if (role == 1) {
-            adminMenu();
-            break;
-        } else if (role == 2) {
-            cashierMenu();
-            break;
-        } else if (role == 0) {
-            return;
-        } else {
-            cout << "Input isn't valid. Please provide a valid input." << endl;
+        switch (role) {
+            case 1:
+                adminMenu();
+                running = false;
+                break;
+            case 2:
+                cashierMenu();
+                running = false;
+                break;
+            case 0:
+                running = false;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
         }
     }
 }
 
 void adminMenu() {
     int choice = -1;
+    bool running = true;
     
-    while (choice != 0) {
+    while (running) {
         system("clear");
 
         cout << endl << "------------------------";
@@ -106,26 +112,30 @@ void adminMenu() {
         cout << endl << "Select menu (1, 2 or 9): ";
         cin >> choice;
 
-        if (choice >> 0 && choice <= 2) {
-            break;
-        } else if (choice == 9) {
-            login();
-        } else {
-            cout << "Input isn't valid. Please provide a valid input." << endl;
+        switch (choice) {
+            case 1:
+                stockManagement();
+                running = false;
+                break;
+            case 2:
+                creditManagement();
+                running = false;
+                break;
+            case 9:
+                login();
+                running = false;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
         }
     };
-
-    if (choice == 1) {
-        stockManagement();
-    } else {
-        creditManagement();
-    }
 }
 
 void cashierMenu() {
     int choice = -1;
+    bool running = true;
     
-    while (choice != 0) {
+    while (running) {
         system("clear");
 
         cout << endl << "--------------------------";
@@ -140,16 +150,17 @@ void cashierMenu() {
         cout << endl << "Select menu (1 or 9): ";
         cin >> choice;
 
-        if (choice > 0 && choice <= 1) {
-            break;
-        } else if (choice == 9) {
-            login();
-        } else {
-            cout << "Input isn't valid. Please provide a valid input." << endl;
+        switch (choice) {
+            case 1:
+                transactionManagement();
+                running = false;
+                break;
+            case 9:
+                login();
+                running = false;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
         }
     };
-
-    if (choice == 1) {
-        transactionManagement();
-    }
 }

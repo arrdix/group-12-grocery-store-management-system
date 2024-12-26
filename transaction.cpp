@@ -11,8 +11,9 @@ void transactionManagement();
 
 void transactionManagement() {
     int choice = -1;
+    bool running = true;
 
-    while (choice != 0) {
+    while (running) {
         system("clear");
 
         cout << endl << "------------------------------------";
@@ -27,19 +28,22 @@ void transactionManagement() {
         cout << endl << "Select menu (1, 2 or 9): ";
         cin >> choice;
 
-        if (choice > 0 && choice <= 2) {
-            break;
-        } else if (choice == 9) {
-            cashierMenu();
-        } else {
-            cout << "Input isn't valid. Please provide a valid input." << endl;
+        switch (choice) {
+            case 1:
+                createTransaction();
+                running = false;
+                break;
+            case 2:
+                productPriceList();
+                running = false;
+                break;
+            case 9:
+                cashierMenu();
+                running = false;
+                break;
+            default:
+                cout << "Input isn't valid. Please provide a valid input." << endl;
         }
-    }
-
-    if (choice == 1) {
-        createTransaction();
-    } else {
-        productPriceList();
     }
 }
 
@@ -48,6 +52,7 @@ void createTransaction() {
     string productIdList;
     string selectedProductId;
     int choice = -1;
+    bool running = true;
     bool isProductFound = false;
     bool isStockEnough = false;
     int qty;
@@ -57,10 +62,12 @@ void createTransaction() {
         productIdList += product.id + " / ";
     };
 
-    while (choice != 2) {
+    while (running) {
+        system("clear");
         cout << endl << "--------------------------------";
         cout << endl << "       Create Transaction       ";
         cout << endl << "--------------------------------";
+        cout << endl;
         cout << endl;
 
         cout << "Select product id: " << "(" << productIdList << "): ";
@@ -124,22 +131,25 @@ void createTransaction() {
         cout << "Select menu (1 or 2): ";
         cin >> choice;
 
-
-        if (choice == 2) {
-            printReceipt();
-            break;
-        } if (choice == 1) {
-            continue;
-        } else {
-            cout << "Input isn't valid. Please provide a valid input." << endl;
-        };
+        switch (choice) {
+            case 1:
+                running = true;
+                break;
+            case 2:
+                printReceipt();
+                running = false;
+                break;
+            default:
+                cout << "Input isn't valid. Please provide a valid input." << endl;
+        }
     }
 };
 
 void printReceipt() {
     int choice = -1;
+    bool running = true;
 
-    while (choice != 0) {
+    while (running) {
         system("clear");
 
         cout << endl << "---------------------";
@@ -161,18 +171,22 @@ void printReceipt() {
         cout << endl << "Select menu (9): ";
         cin >> choice;
 
-        if (choice == 9) {
-            transactionManagement();
-        } else {
-            cout << "Input isn't valid. Please provide a valid input." << endl;
+        switch (choice) {
+            case 9:
+                transactionManagement();
+                running = true;
+                break;
+            default:
+                cout << "Input isn't valid. Please provide a valid input." << endl;
         }
     }
 }
 
 void productPriceList() {
     int choice = -1;
+    bool running = true;
 
-    while (choice != 0) {
+    while (running) {
         system("clear");
 
         cout << endl << "---------------------------";
@@ -192,10 +206,13 @@ void productPriceList() {
         cout << endl << "Select menu (9): ";
         cin >> choice;
 
-        if (choice == 9) {
-            transactionManagement();
-        } else {
-            cout << "Input isn't valid. Please provide a valid input." << endl;
+        switch (choice) {
+            case 9:
+                transactionManagement();
+                running = true;
+                break;
+            default:
+                cout << "Input isn't valid. Please provide a valid input." << endl;
         }
     }
 }

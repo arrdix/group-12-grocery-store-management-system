@@ -12,8 +12,9 @@ void productQtyHistory();
 
 void stockManagement() {
     int choice = -1;
+    bool running = true;
 
-    while (choice != 0) {
+    while (running) {
         system("clear");
 
         cout << endl << "------------------------------";
@@ -30,71 +31,46 @@ void stockManagement() {
         cout << endl << "Select menu (1, 2, 3, 4 or 9): ";
         cin >> choice;
 
-        if (choice > 0 && choice <= 4) {
-            break;
-        } else if (choice == 9) {
-            adminMenu();
-        } else {
-            cout << "Input isn't valid. Please provide a valid input." << endl;
+        switch (choice) {
+            case 1:
+                productList();
+                running = false;
+                break;
+            case 2:
+                lowQtyProductList();
+                running = false;
+                break;
+            case 3:
+                updateProductQty();
+                running = false;
+                break;
+            case 4:
+                productQtyHistory();
+                running = false;
+                break;
+            case 9:
+                adminMenu();
+                running = false;
+                break;
+            default:
+                cout << "Input isn't valid. Please provide a valid input." << endl;
         }
-    }
-
-    if (choice == 1) {
-        productList();     
-    } else if (choice == 2) {
-        lowQtyProductList();
-    } else if (choice == 3) {
-        updateProductQty();
-    } else if (choice == 4) {
-        productQtyHistory();
     }
 }
 
 void productList() {
-    system("clear");
-
-    cout << endl << "--------------------------";
-    cout << endl << "       Product List       ";
-    cout << endl << "--------------------------";
-    cout << endl;
-
-    for (const Product& product : products) {
-        cout << endl << "ID: " << product.id;
-        cout << endl << "Name: " << product.name;
-        cout << endl << "Price: " << product.price;
-        cout << endl << "Qty: " << product.qty;
-        cout << endl << "Min qty: " << product.minQty;
-        cout << endl;
-    }
-
     int choice = -1;
+    bool running = true;
 
-    while (choice != 0) {
+    while (running) {
+        system("clear");
+
+        cout << endl << "--------------------------";
+        cout << endl << "       Product List       ";
+        cout << endl << "--------------------------";
         cout << endl;
-        cout << endl << "9. Back";
-        cout << endl;
 
-        cout << endl << "Select menu (9): ";
-        cin >> choice;
-
-        if (choice == 9) {
-            stockManagement();
-        } else {
-            cout << "Input isn't valid. Please provide a valid input." << endl;
-        }
-    }
-}
-
-void lowQtyProductList() {
-    system("clear");
-
-    cout << endl << "----------------------------------";
-    cout << endl << "       Low Qty Product List       ";
-    cout << endl << "----------------------------------";
-    cout << endl;
-
-    for (const Product& product : products) {
-        if (product.qty < product.minQty) {
+        for (const Product& product : products) {
             cout << endl << "ID: " << product.id;
             cout << endl << "Name: " << product.name;
             cout << endl << "Price: " << product.price;
@@ -102,11 +78,7 @@ void lowQtyProductList() {
             cout << endl << "Min qty: " << product.minQty;
             cout << endl;
         }
-    }
 
-    int choice = -1;
-
-    while (choice != 0) {
         cout << endl;
         cout << endl << "9. Back";
         cout << endl;
@@ -114,10 +86,54 @@ void lowQtyProductList() {
         cout << endl << "Select menu (9): ";
         cin >> choice;
 
-        if (choice == 9) {
-            stockManagement();
-        } else {
-            cout << "Input isn't valid. Please provide a valid input." << endl;
+        switch (choice) {
+            case 9:
+                stockManagement();
+                running = false;
+                break;
+            default:
+                cout << "Input isn't valid. Please provide a valid input." << endl;
+        }
+    }
+}
+
+void lowQtyProductList() {
+    int choice = -1;
+    bool running = true;
+
+    while (running) {
+        system("clear");
+
+        cout << endl << "----------------------------------";
+        cout << endl << "       Low Qty Product List       ";
+        cout << endl << "----------------------------------";
+        cout << endl;
+
+        for (const Product& product : products) {
+            if (product.qty < product.minQty) {
+                cout << endl << "ID: " << product.id;
+                cout << endl << "Name: " << product.name;
+                cout << endl << "Price: " << product.price;
+                cout << endl << "Qty: " << product.qty;
+                cout << endl << "Min qty: " << product.minQty;
+                cout << endl;
+            }
+        }
+
+        cout << endl;
+        cout << endl << "9. Back";
+        cout << endl;
+
+        cout << endl << "Select menu (9): ";
+        cin >> choice;
+
+        switch (choice) {
+            case 9:
+                stockManagement();
+                running = false;
+                break;
+            default:
+                cout << "Input isn't valid. Please provide a valid input." << endl;
         }
     }
 }
@@ -126,6 +142,7 @@ void updateProductQty() {
     int choice = -1;
     int newQty;
     double changeMoney = 0;
+    bool running = true;
     bool isProductFound = false;
     string selectedProductId;
     string productIdList;
@@ -135,7 +152,7 @@ void updateProductQty() {
         productIdList += product.id + " / ";
     };
 
-    while (choice != 0) {
+    while (running) {
         system("clear");
 
         cout << endl << "--------------------------------";
@@ -190,34 +207,37 @@ void updateProductQty() {
         cout << "Select menu (9): ";
         cin >> choice;
 
-        if (choice == 9) {
-            stockManagement();
-            break;
-        } else {
-            cout << "Input isn't valid. Please provide a valid input." << endl;
-        };
+        switch (choice) {
+            case 9:
+                stockManagement();
+                running = false;
+                break;
+            default:
+                cout << "Input isn't valid. Please provide a valid input." << endl;
+        }
     }
 }
 
 void productQtyHistory() {
-    system("clear");
-
-    cout << endl << "---------------------------------";
-    cout << endl << "       Product Qty History       ";
-    cout << endl << "---------------------------------";
-    cout << endl;
-
-    for (const StockHistory& history : stockHistories) {
-        cout << endl << "Product ID: " << history.productId;
-        cout << endl << "Product name: " << history.productName;
-        cout << endl << "History: " << history.history;
-        cout << endl;
-        
-    }
-
     int choice = -1;
+    bool running = true;
 
-    while (choice != 0) {
+    while (running) {
+        system("clear");
+
+        cout << endl << "---------------------------------";
+        cout << endl << "       Product Qty History       ";
+        cout << endl << "---------------------------------";
+        cout << endl;
+
+        for (const StockHistory& history : stockHistories) {
+            cout << endl << "Product ID: " << history.productId;
+            cout << endl << "Product name: " << history.productName;
+            cout << endl << "History: " << history.history;
+            cout << endl;
+            
+        }
+
         cout << endl;
         cout << endl << "9. Back";
         cout << endl;
@@ -225,10 +245,13 @@ void productQtyHistory() {
         cout << endl << "Select menu (9): ";
         cin >> choice;
 
-        if (choice == 9) {
-            stockManagement();
-        } else {
-            cout << "Input isn't valid. Please provide a valid input." << endl;
+        switch (choice) {
+            case 9:
+                stockManagement();
+                running = false;
+                break;
+            default:
+                cout << "Input isn't valid. Please provide a valid input." << endl;
         }
     }
 }

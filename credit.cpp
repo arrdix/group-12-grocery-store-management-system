@@ -11,8 +11,9 @@ void creditDueDate();
 
 void creditManagement() {
     int choice = -1;
+    bool running = true;
 
-    while (choice != 0) {
+    while (running) {
         system("clear");
 
         cout << endl << "------------------------------";
@@ -28,28 +29,34 @@ void creditManagement() {
         cout << endl << "Select menu (1, 2, 3 or 9): ";
         cin >> choice;
 
-        if (choice > 0 && choice <= 3) {
-            break;
-        } else if (choice == 9) {
-            adminMenu();
-        } else {
-            cout << "Input isn't valid. Please provide a valid input." << endl;
+        switch (choice) {
+            case 1:
+                unpaidCredit();
+                running = false;
+                break;
+            case 2:
+                creditDueDate();
+                running = false;
+                break;
+            case 3:
+                payCredit();
+                running = false;
+                break;
+            case 9:
+                adminMenu();
+                running = false;
+                break;
+            default:
+                cout << "Input isn't valid. Please provide a valid input." << endl;
         }
-    }
-
-    if (choice == 1) {
-        unpaidCredit();     
-    } else if (choice == 2) {
-        creditDueDate();
-    } else {
-        payCredit();
     }
 }
 
 void unpaidCredit() {
     int choice = -1;
+    bool running = true;
 
-    while (choice != 0) {
+    while (running) {
         system("clear");
 
         cout << endl << "---------------------------";
@@ -71,18 +78,22 @@ void unpaidCredit() {
         cout << endl << "Select menu (9): ";
         cin >> choice;
 
-        if (choice == 9) {
-            creditManagement();
-        } else {
-            cout << "Input isn't valid. Please provide a valid input." << endl;
+        switch (choice) {
+            case 9:
+                creditManagement();
+                running = false;
+                break;
+            default:
+                cout << "Input isn't valid. Please provide a valid input." << endl;
         }
     }
 }
 
 void creditDueDate() {
     int choice = -1;
+    bool running = true;
 
-    while (choice != 0) {
+    while (running) {
         system("clear");
 
         cout << endl << "-----------------------------";
@@ -104,10 +115,13 @@ void creditDueDate() {
         cout << endl << "Select menu (9): ";
         cin >> choice;
 
-        if (choice == 9) {
-            creditManagement();
-        } else {
-            cout << "Input isn't valid. Please provide a valid input." << endl;
+        switch (choice) {
+            case 9:
+                creditManagement();
+                running = false;
+                break;
+            default:
+                cout << "Input isn't valid. Please provide a valid input." << endl;
         }
     }
 }
@@ -117,6 +131,7 @@ void payCredit() {
     double paidAmount;
     double changeMoney = 0;
     bool isCreditFound = false;
+    bool running = true;
     string selectedCreditId;
     string creditIdList;
     Credit requestedCredit;
@@ -125,7 +140,7 @@ void payCredit() {
         creditIdList += credit.id + " / ";
     };
 
-    while (choice != 0) {
+    while (running) {
         system("clear");
 
         cout << endl << "------------------------";
@@ -178,12 +193,13 @@ void payCredit() {
         cout << "Select menu (9): ";
         cin >> choice;
 
-
-        if (choice == 9) {
-            creditManagement();
-            break;
-        } else {
-            cout << "Input isn't valid. Please provide a valid input." << endl;
-        };
+        switch (choice) {
+            case 9:
+                creditManagement();
+                running = false;
+                break;
+            default:
+                cout << "Input isn't valid. Please provide a valid input." << endl;
+        }
     }
 }
