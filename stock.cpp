@@ -3,7 +3,7 @@
 #include "global-variables.hpp"
 using namespace std;
 
-void mainMenu();
+void adminMenu();
 void stockManagement();
 void productList();
 void lowQtyProductList();
@@ -26,19 +26,16 @@ void stockManagement() {
         cout << endl << "4. Product Quantity History";
         cout << endl;
         cout << endl << "9. Back";
-        cout << endl << "0. Exit";
 
-        cout << endl << "Select menu (1, 2, 3, 4, 9 or 0): ";
+        cout << endl << "Select menu (1, 2, 3, 4 or 9): ";
         cin >> choice;
 
         if (choice > 0 && choice <= 4) {
             break;
         } else if (choice == 9) {
-            mainMenu();
-        } else if (choice == 0) {
-            return;
+            adminMenu();
         } else {
-            cout << "Input isn't valid. Please provide a valid input.";
+            cout << "Input isn't valid. Please provide a valid input." << endl;
         }
     }
 
@@ -62,7 +59,7 @@ void productList() {
     cout << endl;
 
     for (const Product& product : products) {
-        cout << endl << "Code: " << product.code;
+        cout << endl << "ID: " << product.id;
         cout << endl << "Name: " << product.name;
         cout << endl << "Price: " << product.price;
         cout << endl << "Qty: " << product.qty;
@@ -75,18 +72,15 @@ void productList() {
     while (choice != 0) {
         cout << endl;
         cout << endl << "9. Back";
-        cout << endl << "0. Exit";
         cout << endl;
 
-        cout << endl << "Select menu (9 or 0): ";
+        cout << endl << "Select menu (9): ";
         cin >> choice;
 
         if (choice == 9) {
             stockManagement();
-        } else if (choice == 0) {
-            return;
         } else {
-            cout << "Input isn't valid. Please provide a valid input.";
+            cout << "Input isn't valid. Please provide a valid input." << endl;
         }
     }
 }
@@ -101,7 +95,7 @@ void lowQtyProductList() {
 
     for (const Product& product : products) {
         if (product.qty < product.minQty) {
-            cout << endl << "Code: " << product.code;
+            cout << endl << "ID: " << product.id;
             cout << endl << "Name: " << product.name;
             cout << endl << "Price: " << product.price;
             cout << endl << "Qty: " << product.qty;
@@ -115,18 +109,15 @@ void lowQtyProductList() {
     while (choice != 0) {
         cout << endl;
         cout << endl << "9. Back";
-        cout << endl << "0. Exit";
         cout << endl;
 
-        cout << endl << "Select menu (9 or 0): ";
+        cout << endl << "Select menu (9): ";
         cin >> choice;
 
         if (choice == 9) {
             stockManagement();
-        } else if (choice == 0) {
-            return;
         } else {
-            cout << "Input isn't valid. Please provide a valid input.";
+            cout << "Input isn't valid. Please provide a valid input." << endl;
         }
     }
 }
@@ -136,12 +127,12 @@ void updateProductQty() {
     int newQty;
     double changeMoney = 0;
     bool isProductFound = false;
-    string selectedProductCode;
-    string productCodeList;
+    string selectedProductId;
+    string productIdList;
     Product requestedProduct;
 
     for (const Product& product : products) {
-        productCodeList += product.code + " / ";
+        productIdList += product.id + " / ";
     };
 
     while (choice != 0) {
@@ -152,21 +143,21 @@ void updateProductQty() {
         cout << endl << "--------------------------------";
         cout << endl;
 
-        cout << "Select product id: " << "(" << productCodeList << "): ";
-        cin >> selectedProductCode;
+        cout << "Select product ID: " << "(" << productIdList << "): ";
+        cin >> selectedProductId;
 
         cout << "Qty: ";
         cin >> newQty;
 
         for (Product& product : products) {
-            if (selectedProductCode == product.code) {
+            if (selectedProductId == product.id) {
                 product.qty += newQty;
                 requestedProduct = product;
 
                 isProductFound = true;
 
                 for (StockHistory& history : stockHistories) {
-                    if (history.productCode == product.code) {
+                    if (history.productId == product.id) {
                         history.history += " -> " + to_string(product.qty);
                     }
                 }
@@ -187,26 +178,23 @@ void updateProductQty() {
 
         cout << endl;
         cout << endl << "Current product status:";
-        cout << endl << "Id: " << requestedProduct.code;
+        cout << endl << "ID: " << requestedProduct.id;
         cout << endl << "Name: " << requestedProduct.name;
         cout << endl << "Qty: " << requestedProduct.qty;
         cout << endl << "Min qty: " << requestedProduct.minQty;
         cout << endl;
 
         cout << endl << "9. Back";
-        cout << endl << "0. Exit";
         cout << endl;
 
-        cout << "Select menu (9 or 0): ";
+        cout << "Select menu (9): ";
         cin >> choice;
 
         if (choice == 9) {
             stockManagement();
             break;
-        } if (choice == 0) {
-            return;
         } else {
-            cout << "Input isn't valid. Please provide a valid input.";
+            cout << "Input isn't valid. Please provide a valid input." << endl;
         };
     }
 }
@@ -220,7 +208,8 @@ void productQtyHistory() {
     cout << endl;
 
     for (const StockHistory& history : stockHistories) {
-        cout << endl << "Product code: " << history.productCode;
+        cout << endl << "Product ID: " << history.productId;
+        cout << endl << "Product name: " << history.productName;
         cout << endl << "History: " << history.history;
         cout << endl;
         
@@ -231,18 +220,15 @@ void productQtyHistory() {
     while (choice != 0) {
         cout << endl;
         cout << endl << "9. Back";
-        cout << endl << "0. Exit";
         cout << endl;
 
-        cout << endl << "Select menu (9 or 0): ";
+        cout << endl << "Select menu (9): ";
         cin >> choice;
 
         if (choice == 9) {
             stockManagement();
-        } else if (choice == 0) {
-            return;
         } else {
-            cout << "Input isn't valid. Please provide a valid input.";
+            cout << "Input isn't valid. Please provide a valid input." << endl;
         }
     }
 }

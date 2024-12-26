@@ -3,7 +3,7 @@
 #include "global-variables.hpp"
 using namespace std;
 
-void mainMenu();
+void adminMenu();
 void unpaidCredit();
 void payCredit();
 void creditManagement();
@@ -23,19 +23,16 @@ void creditManagement() {
         cout << endl << "3. Pay Credit";
         cout << endl;
         cout << endl << "9. Back";
-        cout << endl << "0. Exit";
 
-        cout << endl << "Select menu (1, 2, 3, 9 or 0): ";
+        cout << endl << "Select menu (1, 2, 3 or 9): ";
         cin >> choice;
 
         if (choice > 0 && choice <= 3) {
             break;
         } else if (choice == 9) {
-            mainMenu();
-        } else if (choice == 0) {
-            return;
+            adminMenu();
         } else {
-            cout << "Input isn't valid. Please provide a valid input.";
+            cout << "Input isn't valid. Please provide a valid input." << endl;
         }
     }
 
@@ -67,18 +64,15 @@ void unpaidCredit() {
         }
 
         cout << endl << "9. Back";
-        cout << endl << "0. Exit";
         cout << endl;
 
-        cout << endl << "Select menu (9 or 0): ";
+        cout << endl << "Select menu (9): ";
         cin >> choice;
 
         if (choice == 9) {
             creditManagement();
-        } else if (choice == 0) {
-            return;
         } else {
-            cout << "Input isn't valid. Please provide a valid input.";
+            cout << "Input isn't valid. Please provide a valid input." << endl;
         }
     }
 }
@@ -144,20 +138,17 @@ void payCredit() {
         cout << endl;
 
         cout << endl << "9. Back";
-        cout << endl << "0. Exit";
         cout << endl;
 
-        cout << "Select menu (9 or 0): ";
+        cout << "Select menu (9): ";
         cin >> choice;
 
 
         if (choice == 9) {
             creditManagement();
             break;
-        } if (choice == 0) {
-            return;
         } else {
-            cout << "Input isn't valid. Please provide a valid input.";
+            cout << "Input isn't valid. Please provide a valid input." << endl;
         };
     }
 }

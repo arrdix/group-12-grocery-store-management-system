@@ -6,7 +6,7 @@
 using namespace std;
 
 struct Product {
-    string code;
+    string id;
     string name;
     double price;
     int qty;
@@ -14,12 +14,13 @@ struct Product {
 };
 
 struct StockHistory {
-    string productCode;
+    string productId;
+    string productName;
     string history;
 };
 
 struct Transaction {
-    string productCode;
+    string productId;
     string productName;
     int qty;
     double total;

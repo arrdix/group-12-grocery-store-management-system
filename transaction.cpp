@@ -3,7 +3,7 @@
 #include "global-variables.hpp"
 using namespace std;
 
-void mainMenu();
+void cashierMenu();
 void productPriceList();
 void printReceipt();
 void createTransaction();
@@ -23,19 +23,16 @@ void transactionManagement() {
         cout << endl << "2. Product price list";
         cout << endl;
         cout << endl << "9. Back";
-        cout << endl << "0. Exit";
 
-        cout << endl << "Select menu (1, 2 or 0): ";
+        cout << endl << "Select menu (1, 2 or 9): ";
         cin >> choice;
 
         if (choice > 0 && choice <= 2) {
             break;
         } else if (choice == 9) {
-            mainMenu();
-        } else if (choice == 0) {
-            return;
+            cashierMenu();
         } else {
-            cout << "Input isn't valid. Please provide a valid input.";
+            cout << "Input isn't valid. Please provide a valid input." << endl;
         }
     }
 
@@ -48,8 +45,8 @@ void transactionManagement() {
 
 void createTransaction() {
     Product requestedProduct;
-    string productCodeList;
-    string selectedProductCode;
+    string productIdList;
+    string selectedProductId;
     int choice = -1;
     bool isProductFound = false;
     bool isStockEnough = false;
@@ -57,18 +54,23 @@ void createTransaction() {
 
 
     for (const Product& product : products) {
-        productCodeList += product.code + " / ";
+        productIdList += product.id + " / ";
     };
 
     while (choice != 2) {
-        cout << "Select product id: " << "(" << productCodeList << "): ";
-        cin >> selectedProductCode;
+        cout << endl << "--------------------------------";
+        cout << endl << "       Create Transaction       ";
+        cout << endl << "--------------------------------";
+        cout << endl;
+
+        cout << "Select product id: " << "(" << productIdList << "): ";
+        cin >> selectedProductId;
 
         cout << "Input qty: ";
         cin >> qty;
 
         for (Product& product : products) {
-            if (selectedProductCode == product.code) {
+            if (selectedProductId == product.id) {
                 requestedProduct = product;
                 isProductFound = true;
 
@@ -83,6 +85,12 @@ void createTransaction() {
 
                 product.qty -= qty;
                 isStockEnough = true;
+
+                for (StockHistory& history : stockHistories) {
+                    if (history.productId == product.id) {
+                        history.history += " -> " + to_string(product.qty);
+                    }
+                }
             }
         }
 
@@ -98,7 +106,7 @@ void createTransaction() {
         }
 
         transactions.push_back({
-            requestedProduct.code,
+            requestedProduct.id,
             requestedProduct.name,
             qty,
             requestedProduct.price * qty
@@ -123,7 +131,7 @@ void createTransaction() {
         } if (choice == 1) {
             continue;
         } else {
-            cout << "Input isn't valid. Please provide a valid input.";
+            cout << "Input isn't valid. Please provide a valid input." << endl;
         };
     }
 };
@@ -148,18 +156,15 @@ void printReceipt() {
 
         cout << endl;
         cout << endl << "9. Back";
-        cout << endl << "0. Exit";
         cout << endl;
 
-        cout << endl << "Select menu (9 or 0): ";
+        cout << endl << "Select menu (9): ";
         cin >> choice;
 
         if (choice == 9) {
             transactionManagement();
-        } else if (choice == 0) {
-            return;
         } else {
-            cout << "Input isn't valid. Please provide a valid input.";
+            cout << "Input isn't valid. Please provide a valid input." << endl;
         }
     }
 }
@@ -182,18 +187,15 @@ void productPriceList() {
 
         cout << endl;
         cout << endl << "9. Back";
-        cout << endl << "0. Exit";
         cout << endl;
 
-        cout << endl << "Select menu (9 or 0): ";
+        cout << endl << "Select menu (9): ";
         cin >> choice;
 
         if (choice == 9) {
             transactionManagement();
-        } else if (choice == 0) {
-            return;
         } else {
-            cout << "Input isn't valid. Please provide a valid input.";
+            cout << "Input isn't valid. Please provide a valid input." << endl;
         }
     }
 }
