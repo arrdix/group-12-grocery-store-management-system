@@ -13,6 +13,11 @@ struct Product {
     int minQty;
 };
 
+struct StockHistory {
+    string productCode;
+    string history;
+};
+
 struct Transaction {
     string productCode;
     string productName;
@@ -27,6 +32,7 @@ struct Credit {
 };
 
 extern vector<Product> products;
+extern vector<StockHistory> stockHistories;
 extern vector<Transaction> transactions;
 extern vector<Credit> credits;
 

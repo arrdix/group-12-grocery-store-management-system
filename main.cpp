@@ -7,13 +7,28 @@
 using namespace std;
 
 vector<Product> products;
+vector<StockHistory> stockHistories;
 vector<Transaction> transactions;
 vector<Credit> credits;
 
 void addInitialProduct() {
     products.push_back({ "P001", "Oreo", 10000.0, 50, 5 });
     products.push_back({ "P002", "Bengbeng", 12000.0, 50, 5 });
-    products.push_back({ "P003", "Indomie", 9000.0, 50, 5 });
+    products.push_back({ "P003", "Indomie", 9000.0, 20, 25 });
+}
+
+void addInitialHistory() {
+    stockHistories.push_back({ "P001", "0" });
+    stockHistories.push_back({ "P002", "0" });
+    stockHistories.push_back({ "P003", "0" });
+
+    for (StockHistory& history : stockHistories) {
+        for (Product& product : products) {
+            if (history.productCode == product.code) {
+                history.history += " -> " + to_string(product.qty);
+            }
+        }
+    }
 }
 
 void addInitialCredit() {
@@ -24,6 +39,7 @@ void addInitialCredit() {
 
 int main() {
     addInitialProduct();
+    addInitialHistory();
     addInitialCredit();
 
     int role = -1;
