@@ -13,6 +13,14 @@ struct Product {
     int minQty;
 };
 
+struct Transaction {
+    string productCode;
+    string productName;
+    int qty;
+    double total;
+};
+
 extern vector<Product> products;
+extern vector<Transaction> transactions;
 
 #endif

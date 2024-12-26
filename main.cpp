@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include "stock.cpp"
 #include "credit.cpp"
 #include "transaction.cpp"
@@ -6,6 +7,7 @@
 using namespace std;
 
 vector<Product> products;
+vector<Transaction> transactions;
 
 void addInitialProduct() {
     products.push_back({ "P001", "Oreo", 10000.0, 50, 5 });
@@ -19,7 +21,8 @@ int main() {
     int role = -1;
 
     while (role != 1 && role != 2) {
-        cout << endl;
+        system("clear");
+
         cout << endl << "-------------------";
         cout << endl << "       Login       ";
         cout << endl << "-------------------";
@@ -37,9 +40,11 @@ int main() {
         cout << endl;
 
         if (role == 1) {
-            cout << endl << "Hi, Admin!";
+            mainMenu();
+            break;
         } else if (role == 2) {
-            cout << endl << "Hi, Cashier!";
+            mainMenu();
+            break;
         } else if (role == 0) {
             return 0;
         } else {
@@ -47,10 +52,15 @@ int main() {
         }
     }
 
+    return 0;
+}
+
+void mainMenu() {
     int choice = -1;
     
     while (choice != 0) {
-        cout << endl;
+        system("clear");
+
         cout << endl << "-----------------------";
         cout << endl << "       Main Menu       ";
         cout << endl << "-----------------------";
@@ -68,7 +78,7 @@ int main() {
         if (choice >= 0 && choice <= 3) {
             break;
         } else if (choice == 0) {
-            return 0;
+            return;
         } else {
             cout << "Input isn't valid. Please provide a valid input.";
         }
@@ -81,6 +91,4 @@ int main() {
     } else {
         transactionManagement();
     }
-
-    return 0;
 }
