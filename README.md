@@ -1,4 +1,4 @@
-# Sistem Manajemen Toko Sembako
+# Kel 12 - Sistem Manajemen Toko Sembako
 
 A project built for the Programming & Algorithm final project using C++.
 
