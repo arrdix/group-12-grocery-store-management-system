@@ -5,37 +5,16 @@
 #include <string>
 using namespace std;
 
-struct Product {
-    string id;
-    string name;
-    double price;
-    int qty;
-    int minQty;
-};
+extern const int MAX_ITEM = 10;
 
-struct StockHistory {
-    string productId;
-    string productName;
-    string history;
-};
+extern int productCount;
+extern int stockHistoryCount;
+extern int transactionCount;
+extern int creditCount;
 
-struct Transaction {
-    string productId;
-    string productName;
-    int qty;
-    double total;
-};
-
-struct Credit {
-    string id;
-    string name;
-    string dueDate;
-    double total;
-};
-
-extern vector<Product> products;
-extern vector<StockHistory> stockHistories;
-extern vector<Transaction> transactions;
-extern vector<Credit> credits;
+extern string products[MAX_ITEM][5]; // [Id, Name, Price, Qty, Min Qty]
+extern string stockHistories[MAX_ITEM][3]; // [Product ID, Product Name, History]
+extern string transactions[MAX_ITEM][4]; // [Product ID, Product Name, Qty, Total]
+extern string credits[MAX_ITEM][4]; // [ID, Name, Due Date, Total]
 
 #endif

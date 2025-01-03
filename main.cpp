@@ -6,39 +6,80 @@
 #include "global-variables.hpp"
 using namespace std;
 
-vector<Product> products;
-vector<StockHistory> stockHistories;
-vector<Transaction> transactions;
-vector<Credit> credits;
+int productCount = 3;
+int stockHistoryCount = 3;
+int transactionCount = 0;
+int creditCount = 3;
+
+string products[MAX_ITEM][5]; // [Id, Name, Price, Qty, Min Qty]
+string stockHistories[MAX_ITEM][3]; // [Product ID, Product Name, History]
+string transactions[MAX_ITEM][4]; // [Product ID, Product Name, Qty, Total]
+string credits[MAX_ITEM][4]; // [ID, Name, Due Date, Total]
 
 void login();
 void adminMenu();
 void cashierMenu();
 
 void addInitialProduct() {
-    products.push_back({ "P001", "Oreo", 10000.0, 50, 5 });
-    products.push_back({ "P002", "Bengbeng", 12000.0, 50, 5 });
-    products.push_back({ "P003", "Indomie", 9000.0, 20, 25 });
+    products[0][0] = "P001";
+    products[0][1] = "Oreo";
+    products[0][2] = "10000";
+    products[0][3] = "50";
+    products[0][4] = "5";
+    
+    products[1][0] = "P002";
+    products[1][1] = "Bengbeng";
+    products[1][2] = "11000";
+    products[1][3] = "50";
+    products[1][4] = "5";
+    
+    products[2][0] = "P003";
+    products[2][1] = "Indomie";
+    products[2][2] = "13000";
+    products[2][3] = "20";
+    products[2][4] = "25";
 }
 
 void addInitialHistory() {
-    stockHistories.push_back({ "P001", "Oreo", "0" });
-    stockHistories.push_back({ "P002", "Bengbeng", "0" });
-    stockHistories.push_back({ "P003", "Indomie", "0" });
+    stockHistories[0][0] = "P001";
+    stockHistories[0][1] = "Oreo";
+    stockHistories[0][2] = "0";
+    
+    stockHistories[1][0] = "P002";
+    stockHistories[1][1] = "Bengbeng";
+    stockHistories[1][2] = "0";
+    
+    stockHistories[2][0] = "P003";
+    stockHistories[2][1] = "Indomie";
+    stockHistories[2][2] = "0";
 
-    for (StockHistory& history : stockHistories) {
-        for (Product& product : products) {
-            if (history.productId == product.id) {
-                history.history += " -> " + to_string(product.qty);
+    // Loop over stockHistories
+    for (int i = 0; i < stockHistoryCount; i++) {
+        // Loop over products
+        for (int j = 0; j < productCount; j++) {
+            if (stockHistories[i][0] == products[j][0]) {
+                // Set initial history based on matching productId
+                stockHistories[i][2] += " -> " + products[j][3];
             }
         }
     }
 }
 
 void addInitialCredit() {
-    credits.push_back({ "C001", "Ardi", "12 Jan 2025", 12000 });
-    credits.push_back({ "C002", "Emerald", "29 Jan 2025", 9000 });
-    credits.push_back({ "C003", "Dira", "1 Feb 2025", 17000 });
+    credits[0][0] = "C001";
+    credits[0][1] = "Ardi";
+    credits[0][2] = "12 Jan 2025";
+    credits[0][3] = "12000";
+
+    credits[1][0] = "C002";
+    credits[1][1] = "Dira";
+    credits[1][2] = "29 Jan 2025";
+    credits[1][3] = "17000";
+
+    credits[2][0] = "C003";
+    credits[2][1] = "Emeral";
+    credits[2][2] = "1 Feb 2025";
+    credits[2][3] = "9000";
 }
 
 int main() {
@@ -56,8 +97,6 @@ void login() {
     bool running = true;
 
     while (running) {
-        system("clear");
-
         cout << endl << "-------------------";
         cout << endl << "       Login       ";
         cout << endl << "-------------------";
@@ -72,7 +111,7 @@ void login() {
         cout << endl << "Select role (1 or 2): ";
         cin >> role;
 
-        cout << endl;
+        system("clear");
 
         switch (role) {
             case 1:
@@ -97,8 +136,6 @@ void adminMenu() {
     bool running = true;
     
     while (running) {
-        system("clear");
-
         cout << endl << "------------------------";
         cout << endl << "       Admin Menu       ";
         cout << endl << "------------------------";
@@ -111,6 +148,8 @@ void adminMenu() {
 
         cout << endl << "Select menu (1, 2 or 9): ";
         cin >> choice;
+
+        system("clear");
 
         switch (choice) {
             case 1:
@@ -136,8 +175,6 @@ void cashierMenu() {
     bool running = true;
     
     while (running) {
-        system("clear");
-
         cout << endl << "--------------------------";
         cout << endl << "       Cashier Menu       ";
         cout << endl << "--------------------------";
@@ -149,6 +186,8 @@ void cashierMenu() {
 
         cout << endl << "Select menu (1 or 9): ";
         cin >> choice;
+
+        system("clear");
 
         switch (choice) {
             case 1:

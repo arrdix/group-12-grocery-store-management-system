@@ -15,8 +15,6 @@ void stockManagement() {
     bool running = true;
 
     while (running) {
-        system("clear");
-
         cout << endl << "------------------------------";
         cout << endl << "       Stock Management       ";
         cout << endl << "------------------------------";
@@ -28,8 +26,11 @@ void stockManagement() {
         cout << endl;
         cout << endl << "9. Back";
 
+        cout << endl;
         cout << endl << "Select menu (1, 2, 3, 4 or 9): ";
         cin >> choice;
+
+        system("clear");
 
         switch (choice) {
             case 1:
@@ -63,28 +64,27 @@ void productList() {
     bool running = true;
 
     while (running) {
-        system("clear");
-
         cout << endl << "--------------------------";
         cout << endl << "       Product List       ";
         cout << endl << "--------------------------";
         cout << endl;
 
-        for (const Product& product : products) {
-            cout << endl << "ID: " << product.id;
-            cout << endl << "Name: " << product.name;
-            cout << endl << "Price: " << product.price;
-            cout << endl << "Qty: " << product.qty;
-            cout << endl << "Min qty: " << product.minQty;
+        for (int i = 0; i < productCount; i++) {
             cout << endl;
+            cout << "ID: " << products[i][0] << endl;
+            cout << "Name: " << products[i][1] << endl;
+            cout << "Price: " << products[i][2] << endl;
+            cout << "Qty: " << products[i][3] << endl;
+            cout << "Min qty: " << products[i][4] << endl;
         }
 
-        cout << endl;
         cout << endl << "9. Back";
         cout << endl;
 
         cout << endl << "Select menu (9): ";
         cin >> choice;
+
+        system("clear");
 
         switch (choice) {
             case 9:
@@ -102,21 +102,20 @@ void lowQtyProductList() {
     bool running = true;
 
     while (running) {
-        system("clear");
-
         cout << endl << "----------------------------------";
         cout << endl << "       Low Qty Product List       ";
         cout << endl << "----------------------------------";
         cout << endl;
 
-        for (const Product& product : products) {
-            if (product.qty < product.minQty) {
-                cout << endl << "ID: " << product.id;
-                cout << endl << "Name: " << product.name;
-                cout << endl << "Price: " << product.price;
-                cout << endl << "Qty: " << product.qty;
-                cout << endl << "Min qty: " << product.minQty;
+        // Only render product where the qty < minQty
+        for (int i = 0; i < productCount; i++) {
+            if (products[i][3] < products[i][4]) {
                 cout << endl;
+                cout << "ID: " << products[i][0] << endl;
+                cout << "Name: " << products[i][1] << endl;
+                cout << "Price: " << products[i][2] << endl;
+                cout << "Qty: " << products[i][3] << endl;
+                cout << "Min qty: " << products[i][4] << endl;
             }
         }
 
@@ -126,6 +125,8 @@ void lowQtyProductList() {
 
         cout << endl << "Select menu (9): ";
         cin >> choice;
+
+        system("clear");
 
         switch (choice) {
             case 9:
@@ -146,36 +147,31 @@ void updateProductQty() {
     bool isProductFound = false;
     string selectedProductId;
     string productIdList;
-    Product requestedProduct;
-
-    for (const Product& product : products) {
-        productIdList += product.id + " / ";
-    };
 
     while (running) {
-        system("clear");
-
         cout << endl << "--------------------------------";
         cout << endl << "       Update Product Qty       ";
         cout << endl << "--------------------------------";
         cout << endl;
 
-        cout << "Select product ID: " << "(" << productIdList << "): ";
+        cout << endl;
+        cout << "Input product ID: ";
         cin >> selectedProductId;
 
-        cout << "Qty: ";
-        cin >> newQty;
-
-        for (Product& product : products) {
-            if (selectedProductId == product.id) {
-                product.qty += newQty;
-                requestedProduct = product;
-
+        for (int i = 0; i < productCount; i++) {
+            if (selectedProductId == products[i][0]) {
                 isProductFound = true;
 
-                for (StockHistory& history : stockHistories) {
-                    if (history.productId == product.id) {
-                        history.history += " -> " + to_string(product.qty);
+                cout << "Input new qty: ";
+                cin >> newQty;
+
+                // Update qty for the selected product
+                products[i][3] = to_string(newQty);
+
+                for (int j = 0; i < stockHistoryCount; i++) {
+                    if (selectedProductId == stockHistories[i][0]) {
+                        // Update stock history for the selected product
+                        stockHistories[i][2] += " -> " + products[i][3];
                     }
                 }
             }
@@ -185,27 +181,37 @@ void updateProductQty() {
             system("clear");
 
             cout << "Product not found." << endl;
+            
+            // Restart the menu loop if the productId is not found
             continue;
         }
 
         system("clear");
 
         cout << endl << "Product qty updated.";
-        cout << endl;
 
         cout << endl;
         cout << endl << "Current product status:";
-        cout << endl << "ID: " << requestedProduct.id;
-        cout << endl << "Name: " << requestedProduct.name;
-        cout << endl << "Qty: " << requestedProduct.qty;
-        cout << endl << "Min qty: " << requestedProduct.minQty;
-        cout << endl;
+
+        for (int i = 0; i < productCount; i++) {
+            if (selectedProductId == products[i][0]) {
+                cout << "ID: " << products[i][0] << endl;
+                cout << "Name: " << products[i][1] << endl;
+                cout << "Price: " << products[i][2] << endl;
+                cout << "Qty: " << products[i][3] << endl;
+                cout << "Min qty: " << products[i][4] << endl;
+                cout << endl;
+            }
+        }
 
         cout << endl << "9. Back";
         cout << endl;
 
+        cout << endl;
         cout << "Select menu (9): ";
         cin >> choice;
+
+        system("clear");
 
         switch (choice) {
             case 9:
@@ -223,19 +229,16 @@ void productQtyHistory() {
     bool running = true;
 
     while (running) {
-        system("clear");
-
         cout << endl << "---------------------------------";
         cout << endl << "       Product Qty History       ";
         cout << endl << "---------------------------------";
         cout << endl;
 
-        for (const StockHistory& history : stockHistories) {
-            cout << endl << "Product ID: " << history.productId;
-            cout << endl << "Product name: " << history.productName;
-            cout << endl << "History: " << history.history;
+        for (int i = 0; i < stockHistoryCount; i++) {
             cout << endl;
-            
+            cout << endl << "Product ID: " << stockHistories[i][0];
+            cout << endl << "Product name: " << stockHistories[i][1];
+            cout << endl << "History: " << stockHistories[i][2];
         }
 
         cout << endl;
@@ -244,6 +247,8 @@ void productQtyHistory() {
 
         cout << endl << "Select menu (9): ";
         cin >> choice;
+
+        system("clear");
 
         switch (choice) {
             case 9:

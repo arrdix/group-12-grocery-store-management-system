@@ -14,8 +14,6 @@ void creditManagement() {
     bool running = true;
 
     while (running) {
-        system("clear");
-
         cout << endl << "------------------------------";
         cout << endl << "       Credit Management       ";
         cout << endl << "------------------------------";
@@ -26,8 +24,11 @@ void creditManagement() {
         cout << endl;
         cout << endl << "9. Back";
 
+        cout << endl;
         cout << endl << "Select menu (1, 2, 3 or 9): ";
         cin >> choice;
+
+        system("clear");
 
         switch (choice) {
             case 1:
@@ -57,26 +58,28 @@ void unpaidCredit() {
     bool running = true;
 
     while (running) {
-        system("clear");
-
         cout << endl << "---------------------------";
         cout << endl << "       Unpaid Credit       ";
         cout << endl << "---------------------------";
         cout << endl;
 
-        for (const Credit& credit : credits) {
-            if (credit.total != 0) {
-                cout << endl << "Name: " << credit.name;
-                cout << endl << "Unpaid Credit: " << credit.total;
+        // Only render credit where the total != 0
+        for (int i = 0; i < creditCount; i++) {
+            if (credits[i][3] != "0") {
+                cout << endl << "Name: " << credits[i][1];
+                cout << endl << "Unpaid Credit: " << credits[i][3];
                 cout << endl;
             }
         }
 
+        cout << endl;
         cout << endl << "9. Back";
         cout << endl;
 
         cout << endl << "Select menu (9): ";
         cin >> choice;
+
+        system("clear");
 
         switch (choice) {
             case 9:
@@ -94,26 +97,27 @@ void creditDueDate() {
     bool running = true;
 
     while (running) {
-        system("clear");
-
         cout << endl << "-----------------------------";
         cout << endl << "       Credit Due Date       ";
-        cout << endl << "------------------------==---";
+        cout << endl << "-----------------------------";
         cout << endl;
 
-        for (const Credit& credit : credits) {
-            if (credit.total != 0) {
-                cout << endl << "Name: " << credit.name;
-                cout << endl << "Credit due date: " << credit.dueDate;
+        for (int i = 0; i < creditCount; i++) {
+            if (credits[i][3] != "0") {
+                cout << endl << "Name: " << credits[i][1];
+                cout << endl << "Credit due date: " << credits[i][2];
                 cout << endl;
             }
         }
 
+        cout << endl;
         cout << endl << "9. Back";
         cout << endl;
 
         cout << endl << "Select menu (9): ";
         cin >> choice;
+
+        system("clear");
 
         switch (choice) {
             case 9:
@@ -134,37 +138,31 @@ void payCredit() {
     bool running = true;
     string selectedCreditId;
     string creditIdList;
-    Credit requestedCredit;
-
-    for (const Credit& credit : credits) {
-        creditIdList += credit.id + " / ";
-    };
 
     while (running) {
-        system("clear");
-
         cout << endl << "------------------------";
         cout << endl << "       Pay Credit       ";
         cout << endl << "------------------------";
         cout << endl;
 
-        cout << "Select credit id: " << "(" << creditIdList << "): ";
+        cout << endl;
+        cout << "Select credit id: ";
         cin >> selectedCreditId;
 
-        cout << "Amount: ";
-        cin >> paidAmount;
-
-        for (Credit& credit : credits) {
-            if (credit.id == selectedCreditId) {
-                if (paidAmount > credit.total) {
-                    changeMoney = paidAmount - credit.total;
-                    credit.total = 0;
-                } else {
-                    credit.total -= paidAmount;
-                }
-                
-                requestedCredit = credit;
+        for (int i = 0; i < creditCount; i++) {
+            if (selectedCreditId == credits[i][0]) {
                 isCreditFound = true;
+                
+                cout << "Amount: ";
+                cin >> paidAmount;
+
+                if (paidAmount > stod(credits[i][3])) {
+                    changeMoney = paidAmount - stod(credits[i][3]);
+                    credits[i][3] = "0";
+                } else {
+                    double updatedCredit = stod(credits[i][3]) - paidAmount;
+                    credits[i][3] = to_string(updatedCredit);
+                }
             }
         }
 
@@ -172,6 +170,8 @@ void payCredit() {
             system("clear");
 
             cout << "Credit not found." << endl;
+
+            // Restart the menu loop if the creditId is not found
             continue;
         }
 
@@ -183,15 +183,24 @@ void payCredit() {
 
         cout << endl;
         cout << endl << "Current credit status:";
-        cout << endl << "Name: " << requestedCredit.name;
-        cout << endl << "Credit: " << requestedCredit.total;
-        cout << endl;
+
+        for (int i = 0; i < creditCount; i++) {
+            if (selectedCreditId == credits[i][0]) {
+                cout << endl << "Name: " << credits[i][1];
+                cout << endl << "Credit: " << credits[i][3];
+                cout << endl;    
+            }
+        }
+        
 
         cout << endl << "9. Back";
         cout << endl;
 
+        cout << endl;
         cout << "Select menu (9): ";
         cin >> choice;
+
+        system("clear");
 
         switch (choice) {
             case 9:

@@ -14,8 +14,6 @@ void transactionManagement() {
     bool running = true;
 
     while (running) {
-        system("clear");
-
         cout << endl << "------------------------------------";
         cout << endl << "       Transaction Management       ";
         cout << endl << "------------------------------------";
@@ -25,8 +23,11 @@ void transactionManagement() {
         cout << endl;
         cout << endl << "9. Back";
 
+        cout << endl;
         cout << endl << "Select menu (1, 2 or 9): ";
         cin >> choice;
+
+        system("clear");
 
         switch (choice) {
             case 1:
@@ -48,88 +49,98 @@ void transactionManagement() {
 }
 
 void createTransaction() {
-    Product requestedProduct;
     string productIdList;
     string selectedProductId;
     int choice = -1;
     bool running = true;
-    bool isProductFound = false;
-    bool isStockEnough = false;
     int qty;
 
-
-    for (const Product& product : products) {
-        productIdList += product.id + " / ";
-    };
-
     while (running) {
-        system("clear");
         cout << endl << "--------------------------------";
         cout << endl << "       Create Transaction       ";
         cout << endl << "--------------------------------";
         cout << endl;
-        cout << endl;
 
-        cout << "Select product id: " << "(" << productIdList << "): ";
+        cout << endl;
+        cout << "Input product id: ";
         cin >> selectedProductId;
 
-        cout << "Input qty: ";
-        cin >> qty;
+        bool isProductFound = false;
+        bool isStockEnough = false;
 
-        for (Product& product : products) {
-            if (selectedProductId == product.id) {
-                requestedProduct = product;
+        for (int i = 0; i < productCount; i++) {
+            if (selectedProductId == products[i][0]) {
                 isProductFound = true;
 
-                if (product.qty < qty) {
+                cout << "Input qty: ";
+                cin >> qty;
+
+                // Check if the available qty of the selected product is more than the qty inputted by the user
+                if (stoi(products[i][3]) < qty) {
                     system("clear");
 
                     cout << endl << "Not enough stock.";
-                    cout << endl << "Only " << product.qty << " left in the stock." << endl;
-                    cout << endl;
-                    break;
+                    cout << endl << "Only " << products[i][3] << " left in the stock." << endl;
+                    isStockEnough = false;
+
+                    // Exit the loop as the stock is not enough
+                    break; 
                 }
 
-                product.qty -= qty;
                 isStockEnough = true;
 
-                for (StockHistory& history : stockHistories) {
-                    if (history.productId == product.id) {
-                        history.history += " -> " + to_string(product.qty);
+                // Update qty of the selected product (existing qty - input qty)
+                int intUpdatedQty = stoi(products[i][3]) - qty;
+                products[i][3] = to_string(intUpdatedQty);
+
+                for (int j = 0; j < stockHistoryCount; j++) {
+                    // Update stock history for the selected product
+                    if (selectedProductId == stockHistories[j][0]) {
+                        stockHistories[j][2] += " -> " + products[i][3];
                     }
                 }
+
+                // Calculate the total price based on the input qty (product price * input qty)
+                int intTotalPrice = stoi(products[i][2]) * qty;
+
+                // Create new transaction record
+                transactions[transactionCount][0] = products[i][0];
+                transactions[transactionCount][1] = products[i][1];
+                transactions[transactionCount][2] = to_string(qty);
+                transactions[transactionCount][3] = to_string(intTotalPrice);
+
+                transactionCount++;
+                break;
             }
         }
 
         if (!isProductFound) {
             system("clear");
 
-            cout << "Product not found." << endl;
+            cout << endl << "Product not found." << endl;
+            
+            // Restart the menu loop if the productId is not found
             continue;
         }
 
         if (!isStockEnough) {
+            // Restart the menu loop if the stock is not enough
             continue;
         }
 
-        transactions.push_back({
-            requestedProduct.id,
-            requestedProduct.name,
-            qty,
-            requestedProduct.price * qty
-        });
-
-        system("clear");
-
         cout << endl << "Transaction created.";
         cout << endl;
+
         cout << endl << "Add another transaction?";
         cout << endl << "1. Yes";
         cout << endl << "2. No";
         cout << endl;
 
+        cout << endl;
         cout << "Select menu (1 or 2): ";
         cin >> choice;
+
+        system("clear");
 
         switch (choice) {
             case 1:
@@ -150,17 +161,15 @@ void printReceipt() {
     bool running = true;
 
     while (running) {
-        system("clear");
-
         cout << endl << "---------------------";
         cout << endl << "       Receipt       ";
         cout << endl << "---------------------";
         cout << endl;
 
-        for (const Transaction& transaction : transactions) {
-            cout << endl << "Product name: " << transaction.productName;
-            cout << endl << "Qty: " << transaction.qty;
-            cout << endl << "Total: " << transaction.total;
+        for (int i = 0; i < transactionCount; i++) {
+            cout << endl << "Product name: " << transactions[i][1];
+            cout << endl << "Qty: " << transactions[i][2];
+            cout << endl << "Total: " << transactions[i][3];
             cout << endl;
         }
 
@@ -170,6 +179,9 @@ void printReceipt() {
 
         cout << endl << "Select menu (9): ";
         cin >> choice;
+
+        system("clear");
+
 
         switch (choice) {
             case 9:
@@ -187,17 +199,15 @@ void productPriceList() {
     bool running = true;
 
     while (running) {
-        system("clear");
-
         cout << endl << "---------------------------";
         cout << endl << "       Product Price       ";
         cout << endl << "---------------------------";
         cout << endl << endl;
 
-        for (const Product& product : products) {
-            cout << product.name << " = " << product.price;
-            cout << endl; 
-        };
+        for (int i = 0; i < productCount; i++) {
+            cout << products[i][1] << " = " << products[i][2];
+            cout << endl;
+        }
 
         cout << endl;
         cout << endl << "9. Back";
@@ -205,6 +215,8 @@ void productPriceList() {
 
         cout << endl << "Select menu (9): ";
         cin >> choice;
+
+        system("clear");
 
         switch (choice) {
             case 9:
