@@ -156,6 +156,10 @@ void payCredit() {
                 cout << "Amount: ";
                 cin >> paidAmount;
 
+                if (paidAmount <= 0) {
+                    cout << "Invalid payment amaount. payment must be greater than 0." << endl;
+                    continue;
+                }
                 if (paidAmount > stod(credits[i][3])) {
                     changeMoney = paidAmount - stod(credits[i][3]);
                     credits[i][3] = "0";
