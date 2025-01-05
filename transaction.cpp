@@ -48,6 +48,8 @@ void transactionManagement() {
     }
 }
 
+const int MAX_TRANSACTIONS = 100;
+
 void createTransaction() {
     string productIdList;
     string selectedProductId;
@@ -60,6 +62,12 @@ void createTransaction() {
         cout << endl << "       Create Transaction       ";
         cout << endl << "--------------------------------";
         cout << endl;
+
+        // check if the maximum transaction limit has been reached
+        if (transactionCount >= MAX_TRANSACTIONS) {
+            cout << "Maximum transaction limit reached." << endl;
+            return; //exit the function if the limit is reached
+        }
 
         cout << endl;
         cout << "Input product id: ";
@@ -114,18 +122,14 @@ void createTransaction() {
                 }
 
                 // Create new transaction record
-                if (transactionsCount < MAX_TRANSACTIONS) {
-                    transactions[transactionCount][0] = products[i][0];
-                    transactions[transactionCount][1] = products[i][1];
-                    transactions[transactionCount][2] = to_string(qty);
-                    transactions[transactionCount][3] = to_string(intTotalPrice);
-                    transactions[transactionCount][4] = paymentmethod;
+                transactions[transactionCount][0] = products[i][0];
+                transactions[transactionCount][1] = products[i][1];
+                transactions[transactionCount][2] = to_string(qty);
+                transactions[transactionCount][3] = to_string(intTotalPrice);
+                transactions[transactionCount][4] = paymentmethod; //save payment method
 
                     transactionCount++;
-                } else {
-                    cout << "Maximum transaction limit reached." << endl;
-                    return; // exit the function if the limit is reached
-                }
+                
                 break;
             }
         }
