@@ -100,25 +100,41 @@ void createTransaction() {
                     }
                 }
 
-                // Calculate the total price based on the input qty (product price * input qty)
-                int intTotalPrice = stoi(products[i][2]) * qty;
+                // Calculate total price with split function
+                int intTotalPrice = calculateTotalPrice(stoi(products[i][2]) * qty);
+
+                // request a payment method
+                sring paymentmethod;
+                cout << "Select payment method (cash/credit): ";
+                cin >> paymentmethod;
+
+                while (paymentmethod != "cash" && paymentmethod != "credit"){
+                    cout << "Invalid payment method, Please enter 'cash' or 'credit': ";
+                    cin >> paymentmethod;
+                }
 
                 // Create new transaction record
-                transactions[transactionCount][0] = products[i][0];
-                transactions[transactionCount][1] = products[i][1];
-                transactions[transactionCount][2] = to_string(qty);
-                transactions[transactionCount][3] = to_string(intTotalPrice);
+                if (transactionsCount < MAX_TRANSACTIONS) {
+                    transactions[transactionCount][0] = products[i][0];
+                    transactions[transactionCount][1] = products[i][1];
+                    transactions[transactionCount][2] = to_string(qty);
+                    transactions[transactionCount][3] = to_string(intTotalPrice);
+                    transactions[transactionCount][4] = paymentmethod;
 
-                transactionCount++;
+                    transactionCount++;
+                } else {
+                    cout << "Maximum transaction limit reached." << endl;
+                    return; // exit the function if the limit is reached
+                }
                 break;
             }
         }
-
-        if (!isProductFound) {
-            system("clear");
-
-            cout << endl << "Product not found." << endl;
+        
+        if (!isProductFound) {   
             
+             system("clear");
+            
+            cout << endl << "Product not found." << endl;
             // Restart the menu loop if the productId is not found
             continue;
         }
