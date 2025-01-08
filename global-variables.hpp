@@ -14,7 +14,7 @@ extern int creditCount;
 
 extern string products[MAX_ITEM][5]; // [Id, Name, Price, Qty, Min Qty]
 extern string stockHistories[MAX_ITEM][3]; // [Product ID, Product Name, History]
-extern string transactions[MAX_ITEM][4]; // [Product ID, Product Name, Qty, Total]
+extern string transactions[MAX_ITEM][5]; // [Product ID, Product Name, Qty, Total, Payment Mehtod]
 extern string credits[MAX_ITEM][4]; // [ID, Name, Due Date, Total]
 
 #endif
