@@ -108,8 +108,8 @@ void createTransaction() {
                     }
                 }
 
-                // Calculate total price with split function
-                int intTotalPrice = calculateTotalPrice(stoi(products[i][2]) * qty);
+                // Calculate total price
+                int intTotalPrice = stoi(products[i][2]) * qty;
 
                 // request a payment method
                 string paymentmethod;
