@@ -112,7 +112,7 @@ void createTransaction() {
                 int intTotalPrice = calculateTotalPrice(stoi(products[i][2]) * qty);
 
                 // request a payment method
-                sring paymentmethod;
+                string paymentmethod;
                 cout << "Select payment method (cash/credit): ";
                 cin >> paymentmethod;
 
